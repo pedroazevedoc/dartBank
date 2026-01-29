@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bank/account.dart';
 
 void main() {
   Account pedroAccount = Account("Pedro", 1000);
@@ -7,9 +8,9 @@ void main() {
   List<Account> accounts = <Account>[pedroAccount, marianaAccount];
 
   print("\nBank's accounts:");
-  for(Account account in accounts){
+  for (Account account in accounts) {
     print("Holder: ${account.holder}"); 
-    print("Balance: R\$${account._balance.toStringAsFixed(2)}\n"); 
+    print("Holder: ${account.getBalance().toStringAsFixed(2)}"); 
   }
 
   print("Type an value to ${pedroAccount.holder} receive:");
@@ -22,32 +23,8 @@ void main() {
 
   marianaAccount.send(value);
 
-  for(Account account in accounts){
+  for (Account account in accounts) {
     print("Holder: ${account.holder}"); 
-    print("Balance: R\$${account._balance.toStringAsFixed(2)}\n"); 
-  }
-}
-
-class Account {
-  String holder;
-  double _balance;
-
-  Account(this.holder, this._balance);
-
-  void receive(double value) {
-    _balance += value;
-    print("Transaction conclude with success.\n");
-  }
-
-  void send(double value) {
-    if (_balance >= value) {
-      if (_balance == value) {
-        print("The balance of $holder will be reseted, because the value of transaction equals of the balance.\n");
-      }
-      _balance -= value;
-      print("Transaction conclude with success.\n");
-    } else {
-      print("Occured an error in the transaction. The sender has no balance to conclude.\n");
-    }
+    print("Holder: ${account.getBalance().toStringAsFixed(2)}"); 
   }
 }
