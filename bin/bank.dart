@@ -1,5 +1,18 @@
-import 'package:bank/bank.dart' as bank;
+void main() {
+  Conta contaPedro = Conta("Pedro", 1000);
+  Conta contaMariana = Conta("Mariana", 5000);
 
-void main(List<String> arguments) {
-  print('Hello world: ${bank.calculate()}!');
+  List<Conta> contas = <Conta>[contaPedro, contaMariana];
+
+  for(Conta conta in contas){
+    print(conta.titular); 
+    print(conta.saldo); 
+  }
+}
+
+class Conta {
+  String titular;
+  double saldo;
+
+  Conta(this.titular, this.saldo);
 }
