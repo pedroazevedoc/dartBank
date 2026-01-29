@@ -1,18 +1,18 @@
 void main() {
-  Conta contaPedro = Conta("Pedro", 1000);
-  Conta contaMariana = Conta("Mariana", 5000);
+  Account pedroAccount = Account("Pedro", 1000);
+  Account marianaAccount = Account("Mariana", 5000);
 
-  List<Conta> contas = <Conta>[contaPedro, contaMariana];
+  List<Account> accounts = <Account>[pedroAccount, marianaAccount];
 
-  for(Conta conta in contas){
-    print(conta.titular); 
-    print(conta.saldo); 
+  for(Account account in accounts){
+    print(account.holder); 
+    print(account.balance); 
   }
 }
 
-class Conta {
-  String titular;
-  double saldo;
+class Account {
+  String holder;
+  double balance;
 
-  Conta(this.titular, this.saldo);
+  Account(this.holder, this.balance);
 }
