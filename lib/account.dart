@@ -27,3 +27,28 @@ class Account {
     return _balance;
   }
 }
+
+class CurrentAccount extends Account {
+  double loan = 300;
+
+  CurrentAccount(super.holder, super._balance);
+
+  @override
+  void send(double value) {
+    if (_balance + loan >= value) {
+      _balance -= value;
+      print("\n$holder's current balance is \$${_balance.toStringAsFixed(2)}");
+    }
+  }
+}
+
+class SavingsAccount extends Account {
+  double yield = 0.05;
+
+  SavingsAccount(super.holder, super._balance);
+
+  void calculatesYield() {
+    print("\nCalculating $holder's yield");
+    _balance += _balance * yield;
+  }
+}

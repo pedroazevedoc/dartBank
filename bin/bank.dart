@@ -5,15 +5,17 @@ void main() {
   Account pedroAccount = Account("Pedro", 1000);
   Account marianaAccount = Account("Mariana", 5000);
 
-  List<Account> accounts = <Account>[pedroAccount, marianaAccount];
+  CurrentAccount bernardoAccount = CurrentAccount("Bernardo", 10000);
+  SavingsAccount juliaAccount = SavingsAccount("Julia", 4000);
+
+  List<Account> accounts = <Account>[pedroAccount, marianaAccount, bernardoAccount, juliaAccount];
 
   print("\nBank's accounts:");
   for (Account account in accounts) {
-    print("Holder: ${account.holder}"); 
-    print("Holder: ${account.getBalance().toStringAsFixed(2)}"); 
+    print("Holder: ${account.holder} | Balance: \$${account.getBalance().toStringAsFixed(2)}"); 
   }
 
-  print("Type an value to ${pedroAccount.holder} receive:");
+  print("\nType an value to ${pedroAccount.holder} receive:");
   double value = double.parse(stdin.readLineSync()!);
 
   pedroAccount.receive(value);
@@ -23,8 +25,19 @@ void main() {
 
   marianaAccount.send(value);
 
+  print("Bank's accounts:");
   for (Account account in accounts) {
-    print("Holder: ${account.holder}"); 
-    print("Holder: ${account.getBalance().toStringAsFixed(2)}"); 
+    print("Holder: ${account.holder} | Balance: \$${account.getBalance().toStringAsFixed(2)}"); 
   }
+
+  bernardoAccount.send(10300);
+  juliaAccount.send(10300);
+    
+  print("Bank's accounts:");
+  for (Account account in accounts) {
+    print("Holder: ${account.holder} | Balance: \$${account.getBalance().toStringAsFixed(2)}"); 
+  }
+
+  juliaAccount.calculatesYield();
+  print("Julia's balance: \$${juliaAccount.getBalance().toStringAsFixed(2)}");
 }
