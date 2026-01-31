@@ -59,8 +59,7 @@ class SalaryAccount extends Account {
 
   SalaryAccount(super.holder, super._balance, this.enterprise, this.ein);
 
-  @override
-  void receive(double value) {
+  void depositSalary(double value) {
     _balance += value;
     print("\nThe $enterprise salary, of EIN $ein in the value \$${value.toStringAsFixed(2)}, was deposited.");
   }
