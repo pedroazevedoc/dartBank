@@ -7,8 +7,9 @@ void main() {
 
   CurrentAccount bernardoAccount = CurrentAccount("Bernardo", 10000);
   SavingsAccount juliaAccount = SavingsAccount("Julia", 4000);
+  SalaryAccount fernandaAccount = SalaryAccount("Fernanda", 15000, "Distripeças Distribuidora de Peças LTDA", "00-0000000"); 
 
-  List<Account> accounts = <Account>[pedroAccount, marianaAccount, bernardoAccount, juliaAccount];
+  List<Account> accounts = <Account>[pedroAccount, marianaAccount, bernardoAccount, juliaAccount, fernandaAccount];
 
   print("\nBank's accounts:");
   for (Account account in accounts) {
@@ -40,4 +41,6 @@ void main() {
 
   juliaAccount.calculatesYield();
   print("Julia's balance: \$${juliaAccount.getBalance().toStringAsFixed(2)}");
+
+  fernandaAccount.receive(7500);
 }

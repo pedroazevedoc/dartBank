@@ -52,3 +52,16 @@ class SavingsAccount extends Account {
     _balance += _balance * yield;
   }
 }
+
+class SalaryAccount extends Account {
+  String enterprise;
+  String ein; // (employer identification number)
+
+  SalaryAccount(super.holder, super._balance, this.enterprise, this.ein);
+
+  @override
+  void receive(double value) {
+    _balance += value;
+    print("\nThe $enterprise salary, of EIN $ein in the value \$${value.toStringAsFixed(2)}, was deposited.");
+  }
+}
