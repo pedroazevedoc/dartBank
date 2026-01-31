@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:bank/account.dart';
 
 void main() {
-  Account pedroAccount = Account("Pedro", 1000);
-  Account marianaAccount = Account("Mariana", 5000);
+  var pedroAccount = Account("Pedro", 1000);
+  var marianaAccount = Account("Mariana", 5000);
 
-  CurrentAccount bernardoAccount = CurrentAccount("Bernardo", 10000);
-  SavingsAccount juliaAccount = SavingsAccount("Julia", 4000);
-  SalaryAccount fernandaAccount = SalaryAccount("Fernanda", 15000, "Distripeças Distribuidora de Peças LTDA", "00-0000000"); 
+  var bernardoAccount = CurrentAccount("Bernardo", 10000);
+  var juliaAccount = SavingsAccount("Julia", 4000);
+  var fernandaAccount = SalaryAccount("Fernanda", 15000, "Distripeças Distribuidora de Peças LTDA", "00-0000000"); 
 
   List<Account> accounts = <Account>[pedroAccount, marianaAccount, bernardoAccount, juliaAccount, fernandaAccount];
 
