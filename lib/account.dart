@@ -1,4 +1,4 @@
-class Account {
+abstract class Account {
   String holder;
   double _balance;
 
@@ -7,7 +7,7 @@ class Account {
   void receive(double value) {
     _balance += value;
     print("\nTransaction conclude with success.");
-    print("$holder's current balance is \$${_balance.toStringAsFixed(2)}\n");
+    printsBalance();
   }
 
   void send(double value) {
@@ -17,10 +17,14 @@ class Account {
       }
       _balance -= value;
       print("\nTransaction conclude with success.");
-      print("$holder's current balance is \$${_balance.toStringAsFixed(2)}\n");
+      printsBalance();
     } else {
       print("\nOccured an error in the transaction. The sender has no balance to conclude.\n");
     }
+  }
+
+  void printsBalance() {
+    print("$holder's current balance is \$${_balance.toStringAsFixed(2)}\n");
   }
 
   double getBalance() {
@@ -37,7 +41,7 @@ class CurrentAccount extends Account {
   void send(double value) {
     if (_balance + loan >= value) {
       _balance -= value;
-      print("\n$holder's current balance is \$${_balance.toStringAsFixed(2)}");
+      printsBalance();
     }
   }
 }
@@ -50,6 +54,7 @@ class SavingsAccount extends Account {
   void calculatesYield() {
     print("\nCalculating $holder's yield");
     _balance += _balance * yield;
+    printsBalance();
   }
 }
 
@@ -62,5 +67,50 @@ class SalaryAccount extends Account {
   void salaryDeposit(double value) {
     _balance += value;
     print("\nThe $enterprise salary, of EIN $ein in the value \$${value.toStringAsFixed(2)}, was deposited.");
+    printsBalance();
+  }
+}
+
+mixin Tax {
+  double rate = 0.03;
+
+  double taxedValue(double value) {
+    return value * rate;
+  }
+}
+
+class EnterpriseAccount extends Account with Tax {
+  EnterpriseAccount(super.holder, super._balance);
+
+  @override
+  void send(double value) {
+    if (_balance >= value + taxedValue(value)) {
+      _balance -= value + taxedValue(value);
+      printsBalance();
+    }
+  }
+
+  @override
+  void receive(double value) {
+    _balance += value - taxedValue(value);
+    printsBalance();
+  }
+}
+
+class InvestmentAccount extends Account with Tax {
+  InvestmentAccount(super.holder, super._balance);
+  
+  @override
+  void send(double value) {
+    if (_balance >= value + taxedValue(value)) {
+      _balance -= value + taxedValue(value);
+      printsBalance();
+    }
+  }
+
+  @override
+  void receive(double value) {
+    _balance += value - taxedValue(value);
+    printsBalance();
   }
 }
