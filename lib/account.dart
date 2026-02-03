@@ -27,6 +27,10 @@ abstract class Account {
     print("$holder's current balance is \$${_balance.toStringAsFixed(2)}\n");
   }
 
+  void printsAccountDescription() {
+    print("Holder: $holder | Balance: \$${_balance.toStringAsFixed(2)}\n");
+  }
+
   double getBalance() {
     return _balance;
   }
@@ -68,6 +72,12 @@ class SalaryAccount extends Account {
     _balance += value;
     print("\nThe $enterprise salary, of EIN $ein in the value \$${value.toStringAsFixed(2)}, was deposited.");
     printsBalance();
+  }
+
+  @override
+  void printsAccountDescription() {
+    print("Holder: $holder | Balance: \$${_balance.toStringAsFixed(2)}");
+    print("Enterprise: $enterprise | EIN: $ein\n");
   }
 }
 

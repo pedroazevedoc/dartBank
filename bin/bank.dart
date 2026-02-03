@@ -22,9 +22,13 @@ void main() {
 
       case 3:
         for (Account account in accounts) {
-          print("Holder: ${account.holder} | Balance: \$${account.getBalance().toStringAsFixed(2)}");
+          account.printsAccountDescription();
         }
         sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
+        break;
+
+      case 9:
+        print("Leaving of the bank...");
         break;
 
       default:
