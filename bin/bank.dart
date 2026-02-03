@@ -51,23 +51,6 @@ void accountActions() {
       print("Invalid command. Type again!");
       sleep(const Duration(seconds: 2));
     }
-    switch (command) {
-      case 0:
-        return;
-
-      case 1:
-        break;
-
-      case 2:
-        break;
-
-      case 3:
-        break;
-
-      default:
-        print("Invalid command. Type again!");
-        sleep(const Duration(seconds: 2));
-    }
   }
 }
 
@@ -75,17 +58,89 @@ void accountActions() {
 void openAccount(int accountType) {
   clearScreen();
   print("== Open an account ==");
-  print("Type the holder's name:");
-  String holder = stdin.readLineSync()!;
+  
+  if (accountType == 3) {
+    openSalaryAccount();
+  } else {
+    bool isHolderAvaible = false;
+    String holder = '';
+    do {
+      print("Type the holder's name:");
+      holder = stdin.readLineSync()!;
+      isHolderAvaible = verifyHolder(holder);
+    } while (isHolderAvaible);
+
+    print("How much of money do you want to send to your account?");
+    double balance = double.parse(stdin.readLineSync()!);
+
+    print("\nOpening account...");
+    dynamic newAccount;
+    switch (accountType) {
+      case 1:
+        newAccount = CurrentAccount(holder, balance);
+        break;
+        
+      case 2:
+        newAccount = SavingsAccount(holder, balance);
+        break;
+
+      case 4:
+        newAccount = EnterpriseAccount(holder, balance);
+        break;
+
+      case 5:
+        newAccount = InvestmentAccount(holder, balance);
+        break;
+    }
+    accounts.add(newAccount);
+  }
+
+  print("Account open with success!");
+  sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
+}
+
+void openSalaryAccount() {
+  bool isHolderAvaible = false;
+  String holder = '';
+  do {
+    print("Type the holder's name:");
+    holder = stdin.readLineSync()!;
+    isHolderAvaible = verifyHolder(holder);
+  } while (isHolderAvaible);
+
+  print("Type the enterprise name:");
+  String enterprise = stdin.readLineSync()!;
+
+  print("Type the EIN:");
+  String ein = stdin.readLineSync()!;
 
   print("How much of money do you want to send to your account?");
   double balance = double.parse(stdin.readLineSync()!);
 
   print("\nOpening account...");
-  accounts.add(CurrentAccount(holder, balance));
+  accounts.add(SalaryAccount(holder, balance, enterprise, ein));
+}
 
-  print("Account open with success!");
-  sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
+bool verifyCommand(String value) {
+  if (value == '' || value.isEmpty) {
+    print("Invalid command. Type again!");
+    return false;
+  }
+  return true;
+}
+
+// Verify if already exists a holder with the name of new holder
+bool verifyHolder(String value) {
+  bool isCorrect = verifyCommand(value);
+  if (isCorrect) return false;
+  
+  for (Account account in accounts) {
+    if (account.holder == value) {
+      print("Holder's name are unavaible");
+      return false;
+    }
+  }
+  return true;
 }
 
 // Views
