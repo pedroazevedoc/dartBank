@@ -45,7 +45,10 @@ class CurrentAccount extends Account {
   void send(double value) {
     if (_balance + loan >= value) {
       _balance -= value;
+      print("\nTransaction conclude with success.");
       printsBalance();
+    } else {
+      print("\nOccured an error in the transaction. The sender has no balance to conclude.\n");
     }
   }
 }
@@ -97,6 +100,8 @@ class EnterpriseAccount extends Account with Tax {
     if (_balance >= value + taxedValue(value)) {
       _balance -= value + taxedValue(value);
       printsBalance();
+    } else {
+      print("\nOccured an error in the transaction. The sender has no balance to conclude.\n");
     }
   }
 
@@ -115,6 +120,8 @@ class InvestmentAccount extends Account with Tax {
     if (_balance >= value + taxedValue(value)) {
       _balance -= value + taxedValue(value);
       printsBalance();
+    } else {
+      print("\nOccured an error in the transaction. The sender has no balance to conclude.\n");
     }
   }
 
