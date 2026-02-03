@@ -145,7 +145,7 @@ void openAccount(int accountType) {
       print("Type the holder's name:");
       holder = stdin.readLineSync()!;
       isHolderAvaible = verifyHolder(holder, 'open-account');
-    } while (isHolderAvaible);
+    } while (!isHolderAvaible);
 
     print("How much of money do you want to send to your account?");
     double balance = double.parse(stdin.readLineSync()!);
@@ -210,13 +210,14 @@ void withdrawMoney() {
     print("Type the account's holder:");
     holder = stdin.readLineSync()!;
     isHolderAvaible = verifyHolder(holder, 'make-withdrawal');
-  } while (isHolderAvaible);
+  } while (!isHolderAvaible);
 
   print("Type the value:");
   double value = double.parse(stdin.readLineSync()!);
 
   dynamic account = accounts.firstWhere((ac) => ac.holder == holder);
   account.send(value);
+  sleep(const Duration(seconds: 2));
 }
 
 
@@ -230,23 +231,22 @@ bool verifyCommand(String value) {
   return true;
 }
 
-// Verifies if the holder exists
+// Verifies if the holder / account exists
 bool verifyHolder(String value, String prefix) {
   if (!verifyCommand(value)) return false;
-  
-  // If action are 'open account' dont need verifies if holder donot exists
-  // bool wasFound = prefix == 'open-account' 
-  //   ? true 
-  //   : false;
+
   bool wasFound = false;
 
-  for (Account account in accounts) {
-    if (account.holder == value) {
-      if (prefix == "open-account") {
-        print("Holder's name are unavaible");
-        return false;
-      } else {
-        wasFound = true;
+  // If accounts are empty, don't need holder's verification
+  if (accounts.isNotEmpty) {
+    for (Account account in accounts) {
+      if (account.holder == value) {
+        if (prefix == "open-account") {
+          print("Holder's name are unavaible");
+          return false;
+        } else {
+          wasFound = true;
+        }
       }
     }
   }
@@ -255,6 +255,7 @@ bool verifyHolder(String value, String prefix) {
     print("Don't found any account with this holder");
     print("Please try again.\n");
     sleep(const Duration(seconds: 2));
+    return false;
   }
   return true;
 }
