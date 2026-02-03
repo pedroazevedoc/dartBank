@@ -14,10 +14,11 @@ void main() {
 
     switch (command) {
       case 1:
-        accountActions();
+        openActions();
         break;
 
       case 2:
+        transactionActions();
         break;
 
       case 3:
@@ -27,23 +28,50 @@ void main() {
         sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
         break;
 
-      case 9:
+      case 0:
         print("Leaving of the bank...");
         break;
 
       default:
         print("Invalid command. Type again!");
-        sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
+        sleep(const Duration(seconds: 2));
     }
   }
 }
 
+// Map with menu options
+Map<String, Function> menuOptions = {
+  'main': () => {
+    print("Welcome to Dart Bank! What do you need?"),
+    print("[1] Open an account"),
+    print("[2] Make a transaction"),
+    print("[3] View accounts"),
+    print("[0] Leave the bank"),
+  },
+  'account-open': () => {
+    print("Which account do you need?"),
+    print("[1] Current account"),
+    print("[2] Savings account"),
+    print("[3] Salary account"),
+    print("[4] Enterprise account"),
+    print("[5] Investment account"),
+    print("[0] Back to menu"),
+  },
+  'account-transaction': () => {
+    print("Which transaction you'll make?"),
+    print("[1] Withdrawal"),
+    print("[2] Deposity"),
+    print("[3] Calculate yield"),
+    print("[0] Back to menu"),
+  },
+};
+
 // Menu actions
-void accountActions() {
+void openActions() {
   int command = 9;
   while (command != 0) {
     clearScreen();
-    menuOptions['account']!();
+    menuOptions['account-open']!();
 
     command = int.parse(stdin.readLineSync()!);
     if (command >= 1 && command <= 5) {
@@ -58,7 +86,26 @@ void accountActions() {
   }
 }
 
-// Operations - CRUD
+void transactionActions() {
+  int command = 9;
+  while (command != 0) {
+    clearScreen();
+    menuOptions['account-transaction']!();
+
+    command = int.parse(stdin.readLineSync()!);
+    if (command >= 1 && command <= 3) {
+      openAccount(command);
+    } else if (command == 0) {
+      // Return to the main menu
+      return;
+    } else {
+      print("Invalid command. Type again!");
+      sleep(const Duration(seconds: 2));
+    }
+  }
+}
+
+// Operations - Open Account
 void openAccount(int accountType) {
   clearScreen();
   print("== Open an account ==");
@@ -100,7 +147,7 @@ void openAccount(int accountType) {
   }
 
   print("Account open with success!");
-  sleep(const Duration(seconds: 2)); // 'sleep' to give the user time to read the message.
+  sleep(const Duration(seconds: 2));
 }
 
 void openSalaryAccount() {
@@ -125,6 +172,8 @@ void openSalaryAccount() {
   accounts.add(SalaryAccount(holder, balance, enterprise, ein));
 }
 
+
+// Functions - Verifications
 bool verifyCommand(String value) {
   if (value == '' || value.isEmpty) {
     print("Invalid command. Type again!");
@@ -147,26 +196,8 @@ bool verifyHolder(String value) {
   return true;
 }
 
-// Views
-Map<String, Function> menuOptions = {
-  'main': () => {
-    print("Welcome to Dart Bank! What do you need?"),
-    print("[1] Open an account"),
-    print("[2] Make a transaction"),
-    print("[3] View accounts"),
-    print("[9] Leave the bank"),
-  },
-  'account': () => {
-    print("Which account do you need?"),
-    print("[1] Current account"),
-    print("[2] Savings account"),
-    print("[3] Salary account"),
-    print("[4] Enterprise account"),
-    print("[5] Investment account"),
-    print("[0] Back to menu"),
-  },
-};
 
+// Functions - Others
 void header() {
   print(" :::====  :::====  :::= === :::  ===");
   print(" :::  === :::  === :::===== ::: === ");
