@@ -60,7 +60,7 @@ class SavingsAccount extends Account {
 
   void calculatesYield() {
     print("\nCalculating $holder's yield");
-    _balance += _balance * yield;
+    _balance += (_balance * yield);
     printsBalance();
   }
 }

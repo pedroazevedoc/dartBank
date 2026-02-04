@@ -26,6 +26,10 @@ void main() {
         break;
 
       case 3:
+        calculatesYieldAction();
+        break;
+
+      case 4:
         viewActions();
         break;
 
@@ -119,6 +123,27 @@ void transactionActions() {
         sleep(const Duration(seconds: 2));
     }
   }
+}
+
+void calculatesYieldAction() {
+  if (!checksIfHaveOpenAccounts()) {
+    return;
+  }
+
+  clearScreen();
+  bool isHolderAvaible = false;
+  String holder = '';
+
+  print("== Savings account - Yield ==");
+  do {
+    print("Type the account's holder:");
+    holder = stdin.readLineSync()!;
+    isHolderAvaible = verifyHolder(holder, 'calculate-yield');
+  } while (!isHolderAvaible);
+
+  dynamic account = accounts.firstWhere((ac) => ac.holder == holder);
+  account.calculatesYield();
+  sleep(const Duration(seconds: 3));
 }
 
 void viewActions() {
@@ -253,7 +278,7 @@ bool verifyCommand(String value) {
 bool verifyHolder(String value, String prefix) {
   if (!verifyCommand(value)) return false;
 
-  bool wasFound = false;
+  bool holderFound = false;
 
   // If accounts are empty, don't need holder's verification
   if (accounts.isNotEmpty) {
@@ -263,16 +288,16 @@ bool verifyHolder(String value, String prefix) {
           print("Holder's name are unavaible");
           return false;
         } else {
-          wasFound = true;
+          holderFound = true;
         }
       }
     }
   }
 
-  if (prefix == 'make-transaction' && !wasFound) {
+  if ((prefix == 'make-transaction' || prefix == 'calculate-yield') && !holderFound) {
     print("Don't found any account with this holder");
     print("Please try again.\n");
-    sleep(const Duration(seconds: 2));
+    sleep(const Duration(seconds: 3));
     return false;
   }
   return true;
