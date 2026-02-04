@@ -150,11 +150,26 @@ void viewActions() {
   if (!checksIfHaveOpenAccounts()) {
     return;
   }
+  clearScreen();
+  listAccountHeader();
+
+  int totalAccounts = accounts.length;
+  Account lastAccount = accounts.last;
+
+  print("Total of accounts: $totalAccounts | Last accout created: ${lastAccount.holder}");
+  print("====================================================================\n");
 
   for (Account account in accounts) {
+    String accountType = formatsClassName(account.toString());
     account.printsAccountDescription();
+    print("Account type: $accountType");
   }
-  sleep(const Duration(seconds: 2));
+
+  String? input;
+  do {
+    print("Press ENTER to continue...");
+    input = stdin.readLineSync();
+  } while (input != "");
 }
 
 /*
@@ -326,6 +341,18 @@ void header() {
   print("                                    ");
 }
 
+// Prints list of accounts header
+void listAccountHeader() {
+  print("  _ _     _            __                                   _       ");
+  print(" | (_)   | |          / _|                                 | |      ");
+  print(" | |_ ___| |_    ___ | |_    __ _  ___ ___ ___  _   _ _ __ | |_ ___ ");
+  print(" | | / __| __|  / _ \\|  _|  / _\` |/ __/ __/ _ \\| | | | '_ \\| __/ __|");
+  print(" | | \\__ \\ |_  | (_) | |   | (_| | (_| (_| (_) | |_| | | | | |_\\__ \\");
+  print(" |_|_|___/\\__|  \\___/|_|    \\__,_|\\___\\___\\___/ \\__,_|_| |_|\\__|___/");
+  print("                                                                    ");
+  print("====================================================================");
+}
+
 // Clear terminal
 void clearScreen() {
   if (Platform.isWindows) {
@@ -335,4 +362,20 @@ void clearScreen() {
     // To Linux and macOS
     print(Process.runSync("clear", [], runInShell: true).stdout);
   }
+}
+
+// Formats name of class to prints
+String formatsClassName(String instanceString) {
+  // Remove "Instance of" of beginning and "'" of end
+  String className = instanceString
+    .replaceAll("Instance of '", "")
+    .replaceAll("'", "");
+
+  // Add spaces before capital letters (except the first one)
+  String formatted = className.replaceAllMapped(
+    RegExp(r'(?<=[a-z])(?=[A-Z])'),
+    (match) => ' ',
+  );
+
+  return formatted;
 }

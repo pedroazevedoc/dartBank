@@ -98,6 +98,7 @@ class EnterpriseAccount extends Account with Tax {
   @override
   void send(double value) {
     if (_balance >= value + taxedValue(value)) {
+      print("Calculating tax...");
       _balance -= value + taxedValue(value);
       printsBalance();
     } else {
@@ -107,6 +108,7 @@ class EnterpriseAccount extends Account with Tax {
 
   @override
   void receive(double value) {
+    print("Calculating tax...");
     _balance += value - taxedValue(value);
     printsBalance();
   }
