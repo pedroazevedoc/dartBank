@@ -1,7 +1,20 @@
-# DartBank
+# DartBank - OOP Dart Project
+
+DartBank is a simple command-line banking application developed in Dart, demonstrating object-oriented programming principles. The project includes features such as account creation, deposits, withdrawals, and balance inquiries.
+
+## Objetives
+- Apply the 4 pillars of OOP in a real-world scenario
+- Implement classes, inheritance, encapsulation, and polymorphism in Dart
+- Practice Dart programming language features and syntax
+- Create a solid base for future projects using OOP principles
+
+## Implemented Features
+- Polymorphism in banking operations
+- Encapsulation of sensitive data
+- Abstraction for different account types
 
 ## Dart SDK Installation Instructions
-To install Dart with apt-get, perform the following steps. You need steps 1 to 3 only for the first install.
+To install Dart with apt-get, perform the following steps.
 
 1. Clone the repository:
     ```bash
